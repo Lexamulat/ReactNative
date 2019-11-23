@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
 const bodyParser = require('body-parser');
-// var db = require("./database.js")
+var db = require("./database.js")
 
 var indexRouter = require('./routes/index');
 // var updateRouter = require('./routes/update');
