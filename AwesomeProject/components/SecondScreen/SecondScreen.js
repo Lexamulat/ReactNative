@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, StyleSheet, View, TouchableOpacity, Text, ScrollView, FlatList } from 'react-native';
+import { Button, Image, StyleSheet, View, TouchableOpacity, Text, ScrollView, FlatList } from 'react-native';
 
 export default class ButtonBasics extends Component {
 
@@ -34,16 +34,26 @@ export default class ButtonBasics extends Component {
                 style={styles.eatWrapper}
                 key={eatPartName}
             >
-                <TouchableOpacity
+                <View
                     style={styles.btnClass}
-                    onPress={this._onPressButton}
+                // onPress={this._onPressButton}
                 >
                     <Text
                         style={styles.eatName}
                     >
                         {eatPartName}
                     </Text>
-                </TouchableOpacity>
+
+                    <TouchableOpacity
+                        style={styles.plusBtn}
+                    >
+                        <Image
+                            style={styles.plus}
+                            source={require('../../assets/plus.png')}
+                        />
+                    </TouchableOpacity>
+                </View>
+
                 <FlatList
                     style={styles.eatList}
                     data={[
@@ -51,12 +61,6 @@ export default class ButtonBasics extends Component {
                         { key: 'Dan' },
                         { key: 'Dominic' },
                         { key: 'Jackson' },
-                        { key: 'James' },
-                        { key: 'Joel' },
-                        { key: 'John' },
-                        { key: 'Jillian' },
-                        { key: 'Jimmy' },
-                        { key: 'Julie' },
                     ]}
                     renderItem={({ item }) => <View
                         style={styles.eatListItem}
@@ -129,13 +133,9 @@ const styles = StyleSheet.create({
         color: 'black',
         backgroundColor: 'white',
         display: 'flex',
-        justifyContent: 'center'
-    },
-
-
-    eatNameWrapper: {
-        width: '90%',
-
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        flexDirection: 'row',
     },
 
     eatName: {
@@ -146,8 +146,11 @@ const styles = StyleSheet.create({
     eatList: {
         overflow: 'scroll',
     },
-
     eatListItem: {
         height: 50
+    },
+    plus: {
+        width: 50,
+        height: 50,
     }
 });
