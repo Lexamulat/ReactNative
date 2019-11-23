@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
-import { Button, Image, StyleSheet, View, TouchableOpacity, Text, ScrollView, FlatList } from 'react-native';
+import { Actions } from 'react-native-router-flux'
+
+import {
+    Button, Image, StyleSheet, View,
+    TouchableOpacity, Text, ScrollView, FlatList
+} from 'react-native';
 
 export default class ButtonBasics extends Component {
 
@@ -11,21 +16,9 @@ export default class ButtonBasics extends Component {
     }
 
 
-    _onPressButton() {
-        return
-        return fetch('http://192.168.0.107:3000')
-            .then((response) => {
-                console.log('response', response)
-                alert('228')
-            })
-            .then((responseJson) => {
-                // console.log('responseJson', responseJson)
-                // alert(responseJson.movies[0].title)
-                // return responseJson.movies;
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+    handleAddEatPoint() {
+        console.log('click')
+        Actions.jump('search')
     }
 
     renderEatPart(eatPartName) {
@@ -36,7 +29,6 @@ export default class ButtonBasics extends Component {
             >
                 <View
                     style={styles.btnClass}
-                // onPress={this._onPressButton}
                 >
                     <Text
                         style={styles.eatName}
@@ -46,8 +38,11 @@ export default class ButtonBasics extends Component {
 
                     <TouchableOpacity
                         style={styles.plusBtn}
+                        onPress={this.handleAddEatPoint}
+
                     >
                         <Image
+
                             style={styles.plus}
                             source={require('../../assets/plus.png')}
                         />

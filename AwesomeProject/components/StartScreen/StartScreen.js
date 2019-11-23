@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Button, StyleSheet, View, Image, ImageBackground } from 'react-native';
 
-import {Actions } from 'react-native-router-flux'
+import { Actions } from 'react-native-router-flux'
 
 export default class StartScreen extends Component {
     _onPressButton() {
-        Actions.jump('tab')
+        Actions.jump('day')
     }
 
     render() {
@@ -15,17 +15,17 @@ export default class StartScreen extends Component {
                     style={styles.images}
                     source={require('../../assets/fon2.jpg')}
                 />
-            <View
+                <View
                     style={styles.calcBtn}
 
-            >
+                >
 
-                <Button
-                    onPress={this._onPressButton}
-                    title="Calculate calories"
+                    <Button
+                        onPress={this._onPressButton}
+                        title="Calculate calories"
 
-                />
-            </View>
+                    />
+                </View>
 
             </View>
         );
@@ -35,9 +35,9 @@ export default class StartScreen extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        display:'flex',
+        display: 'flex',
         justifyContent: 'center',
-        alignContent:'center',
+        alignContent: 'center',
     },
 
     images: {
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     calcBtn: {
         position: 'absolute',
         bottom: '7%',
-        left:'30%',
+        left: '30%',
     }
 
 });
