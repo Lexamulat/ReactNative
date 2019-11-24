@@ -5,7 +5,11 @@ var router = express.Router();
 router.get('/', function (req, res, next) {
 
   console.log('have request')
-  res.send('respond with a resource');
+  const response=[
+    {a:1},
+    {a:2}
+  ]
+  res.send(response);
 
 });
 

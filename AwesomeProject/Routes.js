@@ -11,8 +11,8 @@ export default function Routes() {
          <Scene key="root">
 
             <Scene key="home" component={StartScreen} title="Home" />
-            <Scene key="day" component={SecondScreen} title="Day" initial={true} />
-            <Scene key="search" component={SearchScreen} title="Search" />
+            <Scene key="day" component={SecondScreen} title="Day" />
+            <Scene key="search" component={SearchScreen} title="Search" initial={true} />
 
          </Scene>
       </Router>
