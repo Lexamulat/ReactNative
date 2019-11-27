@@ -15,7 +15,9 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
             protein REAL NOT NULL,
             fat REAL NOT NULL,
             carbohydrates REAL NOT NULL,
-            kkal REAL NOT NULL
+            kkal REAL NOT NULL,
+            measurement TEXT NOT NULL
+
             )`,
             (err) => {
                 if (err) {
@@ -33,13 +35,13 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
                         if (!rows) {
                             console.log('need to add test rows')
 
-                            const insert = `INSERT INTO ${databaseName} (name,protein,fat,carbohydrates,kkal) VALUES (?,?,?,?,?)`
-                            db.run(insert, ["куриная грудка", 24, 2, 0.5, 113]),
-                                db.run(insert, ["куриная", 24, 2, 0.5, 113]),
+                            const insert = `INSERT INTO ${databaseName} (name,protein,fat,carbohydrates,kkal,measurement) VALUES (?,?,?,?,?,?)`
+                            db.run(insert, ["куриная грудка", 24, 2, 0.5, 113, '100г']),
+                                db.run(insert, ["куриная", 24, 2, 0.5, 113, '100г']),
 
-                                db.run(insert, ["гречка", 13, 3.4, 72, 343]),
-                                db.run(insert, ["abcd", 13, 3.4, 72, 343])
-                        }else{
+                                db.run(insert, ["гречка", 13, 3.4, 72, 343, '100г']),
+                                db.run(insert, ["abcd", 13, 3.4, 72, 343, '100г'])
+                        } else {
                             console.log('test rows are already exist')
                         }
                     });

@@ -50,7 +50,16 @@ export default class SearchScreen extends Component {
             <View
                 style={styles.eatListItem}
             >
-                <Text>{income}</Text>
+                <Text>{income.name}</Text>
+                <View style={styles.itemMeasurements}>
+                    <Text>{income.measurement}</Text>
+                    <Text>{income.kkal}</Text>
+                    <Text>{income.protein}</Text>
+                    <Text>{income.fat}</Text>
+                    <Text>{income.carbohydrates}</Text>
+                </View>
+
+
             </View>
         )
     }
@@ -65,7 +74,7 @@ export default class SearchScreen extends Component {
                 keyExtractor={item => String(item.id)}
                 renderItem={({ item }) => {
                     return (
-                        this.renderElement(item.name)
+                        this.renderElement(item)
                     )
 
                 }}
@@ -135,5 +144,13 @@ const styles = StyleSheet.create({
         width: '95%',
         height: '100%',
         backgroundColor: 'white'
+    },
+    eatListItem: {
+        display: 'flex',
+        flexDirection: 'column'
+    },
+    itemMeasurements: {
+        display: 'flex',
+        flexDirection: 'row'
     }
 });
