@@ -36,7 +36,7 @@ export default class SearchScreen extends Component {
     makeRequest = () => {
         const { searchValue } = this.state;
         console.log('makeRequest with', searchValue);
-        requestHelper('/', this.setResult)
+        requestHelper('/', this.setResult, [{ key: 'name', value: 'курица' }])
     }
     setResult = (result) => {
         console.log('setResult', result)
@@ -49,7 +49,6 @@ export default class SearchScreen extends Component {
         return (
             <View
                 style={styles.eatListItem}
-                key={income}
             >
                 <Text>{income}</Text>
             </View>
@@ -63,11 +62,10 @@ export default class SearchScreen extends Component {
             <FlatList
                 style={styles.eatList}
                 data={foundedElements}
+                keyExtractor={item => String(item.id)}
                 renderItem={({ item }) => {
-                    console.log('item', item)
-
                     return (
-                        this.renderElement(item.a)
+                        this.renderElement(item.name)
                     )
 
                 }}
@@ -77,7 +75,6 @@ export default class SearchScreen extends Component {
 
     render() {
         const { searchValue } = this.state;
-
         return (
             <View
                 style={styles.container}
