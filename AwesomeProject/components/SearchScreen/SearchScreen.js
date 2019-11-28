@@ -4,6 +4,9 @@ import {
     Text, ScrollView, FlatList, TextInput
 } from 'react-native';
 
+import SingleItem from '../SingleItem/SingleItem';
+
+
 import requestHelper from '../helpers/requestHelper'
 
 const SEND_REQUEST_TIMEOUT = 500;
@@ -24,7 +27,6 @@ export default class SearchScreen extends Component {
     }
 
     handleChangeSearchField = (searchValue) => {
-        console.log('searchField', searchValue)
         this.setState({ searchValue });
         this.refreshRequestTimeout()
     }
@@ -35,33 +37,12 @@ export default class SearchScreen extends Component {
     }
     makeRequest = () => {
         const { searchValue } = this.state;
-        console.log('makeRequest with', searchValue);
         requestHelper('/', this.setResult, [{ key: 'name', value: 'курица' }])
     }
     setResult = (result) => {
-        console.log('setResult', result)
         if (result) {
             this.setState({ foundedElements: result })
         }
-    }
-
-    renderElement = (income) => {
-        return (
-            <View
-                style={styles.eatListItem}
-            >
-                <Text>{income.name}</Text>
-                <View style={styles.itemMeasurements}>
-                    <Text>{income.measurement}</Text>
-                    <Text>{income.kkal}</Text>
-                    <Text>{income.protein}</Text>
-                    <Text>{income.fat}</Text>
-                    <Text>{income.carbohydrates}</Text>
-                </View>
-
-
-            </View>
-        )
     }
 
     renderFoundedElements = () => {
@@ -74,7 +55,9 @@ export default class SearchScreen extends Component {
                 keyExtractor={item => String(item.id)}
                 renderItem={({ item }) => {
                     return (
-                        this.renderElement(item)
+                        <SingleItem
+                            incomeItem={item}
+                        />
                     )
 
                 }}
@@ -145,12 +128,47 @@ const styles = StyleSheet.create({
         height: '100%',
         backgroundColor: 'white'
     },
-    eatListItem: {
-        display: 'flex',
-        flexDirection: 'column'
+    eatList: {
+        marginTop: 10,
+        width: '95%',
+        backgroundColor: '#f9f9f9'
+
     },
-    itemMeasurements: {
+    eatListItem: {
+        width: '100%',
+        padding: 5,
+        height: 60,
+        display: 'flex',
+        flexDirection: 'column',
+        borderBottomColor: '#d5d5d5',
+        borderBottomWidth: 2,
+    },
+    name: {
+        fontSize: 17,
+    },
+    mesurement: {
+        color: '#339f79',
+    },
+    kkalBlock: {
+        marginLeft: 10,
+        marginRight: 10,
         display: 'flex',
         flexDirection: 'row'
+    },
+    kkal: {
+
+    },
+    text: {
+        color: '#b6b6b6',
+    },
+    num: {
+        color: '#9a9a9a',
+
+    },
+    itemMeasurements: {
+        marginTop: 5,
+        display: 'flex',
+        flexDirection: 'row',
+
     }
 });
