@@ -37,7 +37,6 @@ export default class ButtonBasics extends Component {
                     </Text>
 
                     <TouchableOpacity
-                        style={styles.plusBtn}
                         onPress={this.handleAddEatPoint}
 
                     >

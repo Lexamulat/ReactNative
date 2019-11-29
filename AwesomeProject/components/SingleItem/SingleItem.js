@@ -6,6 +6,9 @@ import {
 
 import classNames from 'react-native-classnames';
 
+import PlusMinusBtn from '../controls/PlusMinusBtn/PlusMinusBtn';
+
+
 export default class SingleItem extends Component {
 
     constructor(props) {
@@ -17,52 +20,83 @@ export default class SingleItem extends Component {
     }
 
     renderNumWithValue = (title, measurement, kkalBlock, lastItem) => {
+
         const titleBlockClassName = classNames(styles, 'titleBlock', {
             kkalBlock: Boolean(kkalBlock)
-        }
-        );
+        });
+
+
         return (
             <View
                 style={titleBlockClassName}>
-                <Text
-                    style={styles.text}
-                >
-                    {title}
-                </Text>
                 <Text
                     style={styles.num}
                 >
                     {measurement}
                 </Text>
-                {!(lastItem || kkalBlock) && <Text
-                    style={styles.dividerLine}
+                <Text
+                    style={styles.text}
                 >
-                    /
+                    {title}
                 </Text>
-                }
             </View>
         )
     }
 
+
+    calcNutritions(nutritionPerUnit, weight) {
+        return nutritionPerUnit * weight / 100
+    }
+
     render() {
-        const { incomeItem } = this.props;
+        const { incomeItem, btnMod } = this.props;
 
         return (
             <View
                 style={styles.eatListItem}
             >
-                <Text
-                    style={styles.name}
-
-                >{incomeItem.name}</Text>
-                <View style={styles.itemMeasurements}>
+                <View
+                    style={styles.leftPart}
+                >
                     <Text
-                        style={styles.mesurement}
-                    >{incomeItem.measurement}</Text>
-                    {this.renderNumWithValue('kkal', incomeItem.kkal, true)}
-                    {this.renderNumWithValue('pr.', incomeItem.protein)}
-                    {this.renderNumWithValue('fat', incomeItem.fat)}
-                    {this.renderNumWithValue('carb.', incomeItem.carbohydrates, undefined, true)}
+                        style={styles.name}
+                    >
+                        {incomeItem.name}
+                    </Text>
+                    <View style={styles.itemMeasurements}>
+                        <Text
+                            style={styles.mesurement}
+                        >
+                            {incomeItem.measurementVal}
+                        </Text>
+                        <Text
+                            style={styles.mesurement}
+                        >
+                            {incomeItem.measurementTitle}
+                        </Text>
+                        {this.renderNumWithValue('kkal',
+                            this.calcNutritions(incomeItem.kkal, incomeItem.measurementVal), true)}
+                        {this.renderNumWithValue('(p)',
+                            this.calcNutritions(incomeItem.protein, incomeItem.measurementVal))}
+                        {this.renderNumWithValue('(f)',
+                            this.calcNutritions(incomeItem.fat, incomeItem.measurementVal))}
+                        {this.renderNumWithValue('(c)',
+                            this.calcNutritions(incomeItem.carbohydrates, incomeItem.measurementVal), undefined, true)}
+                    </View>
+                </View>
+                <View
+                    style={styles.rightPart}
+
+                >
+                    <TouchableOpacity
+                        onPress={this.props.clickAction}
+                    >
+                        <PlusMinusBtn
+                            incomeMod={btnMod}
+                        />
+
+                    </TouchableOpacity>
+
                 </View>
             </View>
         );
@@ -76,9 +110,22 @@ const styles = StyleSheet.create({
         padding: 5,
         height: 60,
         display: 'flex',
-        flexDirection: 'column',
+        flexDirection: 'row',
         borderBottomColor: '#d5d5d5',
         borderBottomWidth: 2,
+    },
+    leftPart: {
+        display: 'flex',
+        flexDirection: 'column',
+        width: '90%',
+        height: '100%'
+    },
+    rightPart: {
+        width: '10%',
+        height: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     name: {
         fontSize: 17,
@@ -105,7 +152,6 @@ const styles = StyleSheet.create({
     num: {
         color: '#747474',
         fontSize: 15,
-
     },
     dividerLine: {
         color: '#575757',
@@ -115,5 +161,5 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
 
-    }
+    },
 });
