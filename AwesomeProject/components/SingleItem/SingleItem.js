@@ -15,11 +15,16 @@ export default class SingleItem extends Component {
         super(props);
         this.state = {
             searchValue: '',
-            foundedElements: undefined
+            foundedElements: undefined,
+            val: 200
         };
     }
 
-    renderNumWithValue = (title, measurement, kkalBlock, lastItem) => {
+    handleChangeSearchField = (searchValue) => {
+        this.setState({ val: searchValue });
+    }
+
+    renderNumWithValue = (title, measurement, kkalBlock) => {
 
         const titleBlockClassName = classNames(styles, 'titleBlock', {
             kkalBlock: Boolean(kkalBlock)
@@ -34,6 +39,7 @@ export default class SingleItem extends Component {
                 >
                     {measurement}
                 </Text>
+
                 <Text
                     style={styles.text}
                 >
@@ -49,7 +55,8 @@ export default class SingleItem extends Component {
     }
 
     render() {
-        const { incomeItem, btnMod } = this.props;
+        const { incomeItem, btnMod, canBeEdited } = this.props;
+        const { val } = this.state;
 
         return (
             <View
@@ -64,11 +71,24 @@ export default class SingleItem extends Component {
                         {incomeItem.name}
                     </Text>
                     <View style={styles.itemMeasurements}>
-                        <Text
-                            style={styles.mesurement}
-                        >
-                            {incomeItem.measurementVal}
-                        </Text>
+                        {canBeEdited ?
+                            <TextInput
+                                placeholder="Search"
+                                style={styles.mesurement}
+                                onChangeText={this.handleChangeSearchField}
+                                value={String(val)}
+                                keyboardShouldPersistTaps='handled'
+                                keyboardType={'numeric'}
+
+                            />
+                            :
+
+                            <Text
+                                style={styles.mesurement}
+                            >
+                                {incomeItem.measurementVal}
+                            </Text>
+                        }
                         <Text
                             style={styles.mesurement}
                         >
@@ -147,7 +167,10 @@ const styles = StyleSheet.create({
     },
     text: {
         color: '#b6b6b6',
-        marginRight: 3
+        marginRight: 3,
+        textAlignVertical: 'bottom',
+        fontSize: 10,
+
     },
     num: {
         color: '#747474',

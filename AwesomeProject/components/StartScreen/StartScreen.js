@@ -17,9 +17,7 @@ export default class StartScreen extends Component {
                 />
                 <View
                     style={styles.calcBtn}
-
                 >
-
                     <Button
                         onPress={this._onPressButton}
                         title="Calculate calories"

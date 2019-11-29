@@ -29,8 +29,6 @@ export default class SearchScreen extends Component {
     }
 
     addToChoosenElements = (newElement) => () => {
-        console.log('add', newElement)
-
         Keyboard.dismiss();
         const { choosenElements } = this.state;
 
@@ -100,6 +98,44 @@ export default class SearchScreen extends Component {
             <View
                 style={styles.listsWrapper}
             >
+                {choosenElements.length != 0 &&
+                    <View
+                        style={styles.choosenBoxWrapper}
+                    >
+                        <ScrollView
+                            style={styles.choosenEatsList}
+                        >
+                            {choosenElements.map(item => {
+                                return (
+                                    <View
+                                        key={'search' + item.id}
+                                    >
+                                        <SingleItem
+                                            canBeEdited
+                                            btnMod={MINUS}
+                                            incomeItem={item}
+                                            clickAction={this.delFromChoosenElements(item)}
+                                        />
+                                    </View>
+                                )
+                            })}
+                        </ScrollView>
+                        <View
+                            style={styles.saveBtnWrapper}
+                        >
+                            <TouchableOpacity
+                                onPress={this.handleSave}
+                            >
+                                <Text
+                                    style={styles.saveText}
+                                >
+                                    Save
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                }
+
                 <ScrollView
                     style={styles.eatList}
                     keyboardShouldPersistTaps='handled'
@@ -118,48 +154,7 @@ export default class SearchScreen extends Component {
                         )
                     })}
                 </ScrollView>
-                {choosenElements.length != 0 &&
-                    <View
-                        style={styles.choosenBoxWrapper}
-                    >
-                        <View
-                            style={styles.saveBtnWrapper}
-                        >
 
-
-                            <TouchableOpacity
-                                onPress={this.handleSave}
-                            >
-                                <Text
-                                    style={styles.saveText}
-                                >
-                                    Save
-                                </Text>
-                            </TouchableOpacity>
-
-
-                        </View>
-
-                        <ScrollView
-                            style={styles.choosenEatsList}
-                        >
-                            {choosenElements.map(item => {
-                                return (
-                                    <View
-                                        key={'search' + item.id}
-                                    >
-                                        <SingleItem
-                                            btnMod={MINUS}
-                                            incomeItem={item}
-                                            clickAction={this.delFromChoosenElements(item)}
-                                        />
-                                    </View>
-                                )
-                            })}
-                        </ScrollView>
-
-                    </View>
-                }
             </View>
         )
     }
