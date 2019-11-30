@@ -3,7 +3,7 @@ import {
     Button, Image, StyleSheet, View, TouchableOpacity,
     Text, ScrollView, FlatList, TextInput, Keyboard
 } from 'react-native';
-
+import { Actions } from 'react-native-router-flux'
 import _ from 'lodash';
 
 import SingleItem from '../SingleItem/SingleItem';
@@ -40,9 +40,6 @@ export default class SearchScreen extends Component {
     }
 
     delFromChoosenElements = (delElement) => () => {
-
-        console.log('add', delElement)
-
 
         const newMasWithoutDeletedElement = []
         const { choosenElements } = this.state;
@@ -102,14 +99,17 @@ export default class SearchScreen extends Component {
     }
 
     handleSave = () => {
-        console.log('save')
+        const { choosenElements } = this.state;
+
+        console.log('save', choosenElements);
+        console.log('clone', _.cloneDeep(choosenElements));
+        window.fakeRedux.currentMas = _.cloneDeep(choosenElements);
+        Actions.jump('day')
+
     }
 
     renderFoundedElements = () => {
         const { foundedElements, choosenElements } = this.state;
-
-
-        console.log('choosen', choosenElements)
 
         if (!foundedElements || foundedElements.length == 0) return
         return (

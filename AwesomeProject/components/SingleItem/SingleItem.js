@@ -23,7 +23,6 @@ export default class SingleItem extends Component {
             kkalBlock: Boolean(kkalBlock)
         });
 
-
         return (
             <View
                 style={titleBlockClassName}>
@@ -76,9 +75,7 @@ export default class SingleItem extends Component {
 
                                 />
                             </View>
-
                             :
-
                             <Text
                                 style={styles.mesurement}
                             >
@@ -139,6 +136,7 @@ const styles = StyleSheet.create({
     rightPart: {
         width: '10%',
         height: '100%',
+        paddingRight:10,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
