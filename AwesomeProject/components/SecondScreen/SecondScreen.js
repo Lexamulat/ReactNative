@@ -32,7 +32,7 @@ export default class ButtonBasics extends Component {
 
     componentWillReceiveProps(nextProps) {
         if (window && window.fakeRedux && window.fakeRedux.currentMas) {
-            this.setcurrentMas(window.fakeRedux.currentPage, window.fakeRedux.currentMas)
+            this.mergeMasOfProducts(window.fakeRedux.currentPage, _.cloneDeep(window.fakeRedux.currentMas));
         }
     }
 
@@ -74,8 +74,32 @@ export default class ButtonBasics extends Component {
                 dinnerMas: _.cloneDeep(currentMas)
             });
             return
-
         }
+    }
+
+    mergeMasOfProducts(currentPage, currentMas) {
+        const prevMas = this.getCurrentMas(currentPage);
+        if (prevMas.length == 0) {
+            this.setcurrentMas(window.fakeRedux.currentPage, window.fakeRedux.currentMas)
+            return
+        }
+        for (let i = 0; i < currentMas.length; i++) {
+            const elWithTheSameId = getValueFromMasById(currentMas[i].id, prevMas)
+            if (elWithTheSameId) {
+                currentMas[i].measurementVal = Number(currentMas[i].measurementVal) +
+                    Number(elWithTheSameId.measurementVal)
+            }
+        }
+
+        function getValueFromMasById(id, mas) {
+            for (let i = 0; i < mas.length; i++) {
+                if (mas[i].id == id) {
+                    return mas[i]
+                }
+            }
+            return undefined
+        }
+
     }
 
     delFromChoosenElements = (delElement, eatPartName) => () => {

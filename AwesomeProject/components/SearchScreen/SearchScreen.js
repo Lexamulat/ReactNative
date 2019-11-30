@@ -87,6 +87,7 @@ export default class SearchScreen extends Component {
         }
     }
     handleChangeChoosenItemProduct = (item) => (newVal) => {
+        if (newVal < 0) newVal = 0
         const { choosenElements } = this.state;
         for (let i = 0; i < choosenElements.length; i++) {
             if (choosenElements[i].id == item.id) {
