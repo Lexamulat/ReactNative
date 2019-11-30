@@ -4,6 +4,8 @@ import {
     Text, ScrollView, FlatList, TextInput, Keyboard
 } from 'react-native';
 
+import _ from 'lodash';
+
 import SingleItem from '../SingleItem/SingleItem';
 
 
@@ -87,12 +89,28 @@ export default class SearchScreen extends Component {
             this.setState({ foundedElements: result })
         }
     }
+    handleChangeChoosenItemProduct = (item) => (newVal) => {
+        const { choosenElements } = this.state;
+        for (let i = 0; i < choosenElements.length; i++) {
+            if (choosenElements[i].id == item.id) {
+                choosenElements[i].measurementVal = newVal;
+            }
+        }
+        this.setState({
+            choosenElements: _.cloneDeep(choosenElements)
+        })
+    }
+
     handleSave = () => {
         console.log('save')
     }
 
     renderFoundedElements = () => {
         const { foundedElements, choosenElements } = this.state;
+
+
+        console.log('choosen', choosenElements)
+
         if (!foundedElements || foundedElements.length == 0) return
         return (
             <View
@@ -115,6 +133,8 @@ export default class SearchScreen extends Component {
                                             btnMod={MINUS}
                                             incomeItem={item}
                                             clickAction={this.delFromChoosenElements(item)}
+                                            changeNumOfProductAcion={this.handleChangeChoosenItemProduct(item)}
+
                                         />
                                     </View>
                                 )

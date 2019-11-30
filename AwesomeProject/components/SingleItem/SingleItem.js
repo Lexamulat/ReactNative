@@ -14,14 +14,7 @@ export default class SingleItem extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            searchValue: '',
-            foundedElements: undefined,
-            val: 200
         };
-    }
-
-    handleChangeSearchField = (searchValue) => {
-        this.setState({ val: searchValue });
     }
 
     renderNumWithValue = (title, measurement, kkalBlock) => {
@@ -56,7 +49,6 @@ export default class SingleItem extends Component {
 
     render() {
         const { incomeItem, btnMod, canBeEdited } = this.props;
-        const { val } = this.state;
 
         return (
             <View
@@ -72,15 +64,19 @@ export default class SingleItem extends Component {
                     </Text>
                     <View style={styles.itemMeasurements}>
                         {canBeEdited ?
-                            <TextInput
-                                placeholder="Search"
-                                style={styles.mesurement}
-                                onChangeText={this.handleChangeSearchField}
-                                value={String(val)}
-                                keyboardShouldPersistTaps='handled'
-                                keyboardType={'numeric'}
+                            <View
+                                style={styles.inputWrap}
+                            >
+                                <TextInput
+                                    style={styles.mesurement}
+                                    onChangeText={this.props.changeNumOfProductAcion}
+                                    value={String(incomeItem.measurementVal)}
+                                    keyboardShouldPersistTaps='handled'
+                                    keyboardType={'numeric'}
 
-                            />
+                                />
+                            </View>
+
                             :
 
                             <Text
@@ -183,6 +179,12 @@ const styles = StyleSheet.create({
         marginTop: 5,
         display: 'flex',
         flexDirection: 'row',
+        alignItems: 'flex-end',
 
     },
+    inputWrap: {
+        height: 15,
+        display: 'flex',
+        alignItems: 'flex-end',
+    }
 });
