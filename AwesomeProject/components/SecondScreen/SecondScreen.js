@@ -45,13 +45,13 @@ export default class ButtonBasics extends Component {
     getCurrentMas(eatPartName) {
         const { breakfastMas, lunchMas, dinnerMas } = this.state;
         if (eatPartName == BREAKFAST) {
-            return breakfastMas
+            return _.cloneDeep(breakfastMas)
         }
         if (eatPartName == LUNCH) {
-            return lunchMas
+            return _.cloneDeep(lunchMas)
         }
         if (eatPartName == DINNER) {
-            return dinnerMas
+            return _.cloneDeep(dinnerMas)
         }
     }
 
@@ -79,8 +79,9 @@ export default class ButtonBasics extends Component {
 
     mergeMasOfProducts(currentPage, currentMas) {
         const prevMas = this.getCurrentMas(currentPage);
+
         if (prevMas.length == 0) {
-            this.setcurrentMas(window.fakeRedux.currentPage, window.fakeRedux.currentMas)
+            this.setcurrentMas(currentPage,currentMas)
             return
         }
         for (let i = 0; i < currentMas.length; i++) {
@@ -90,6 +91,14 @@ export default class ButtonBasics extends Component {
                     Number(elWithTheSameId.measurementVal)
             }
         }
+        for (let i = 0; i < prevMas.length; i++) {
+            const elWithTheSameId = getValueFromMasById(prevMas[i].id, currentMas)
+            if (!elWithTheSameId) {
+                currentMas.push(prevMas[i]);
+            }
+        }
+        this.setcurrentMas(currentPage,currentMas)
+
 
         function getValueFromMasById(id, mas) {
             for (let i = 0; i < mas.length; i++) {
@@ -99,7 +108,6 @@ export default class ButtonBasics extends Component {
             }
             return undefined
         }
-
     }
 
     delFromChoosenElements = (delElement, eatPartName) => () => {
@@ -177,9 +185,6 @@ export default class ButtonBasics extends Component {
 
     renderEatPart(eatPartName) {
         const currentMas = this.getCurrentMas(eatPartName)
-
-        console.log('currentMas', currentMas)
-
         return (
             <View
                 style={styles.eatWrapper}

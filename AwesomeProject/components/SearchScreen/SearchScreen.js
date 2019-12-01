@@ -101,9 +101,6 @@ export default class SearchScreen extends Component {
 
     handleSave = () => {
         const { choosenElements } = this.state;
-
-        console.log('save', choosenElements);
-        console.log('clone', _.cloneDeep(choosenElements));
         window.fakeRedux.currentMas = _.cloneDeep(choosenElements);
         Actions.jump('day')
 

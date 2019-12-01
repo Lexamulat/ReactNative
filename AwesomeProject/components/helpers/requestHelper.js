@@ -12,8 +12,6 @@ export default function requestHelper(url, cb, queryParams) {
 }
 
 function constructGetParamsToUrl(url, paramsMas) {
-    console.log('paramsMas', paramsMas)
-
     if (!paramsMas || paramsMas.length == 0) {
         return url
     }
